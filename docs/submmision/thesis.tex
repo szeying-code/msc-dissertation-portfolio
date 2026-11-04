@@ -1,0 +1,167 @@
+% THESIS.TEX -- main file for the dissertation, built on the offline
+% uonthesis document class (University of Nottingham).
+\documentclass[11pt]{uonthesis}
+
+% Explicitly force A4 -- the class does not set a paper size itself,
+% so without this the compiler's default is used, which on some
+% servers (e.g. Overleaf) is US Letter rather than A4.
+\setlength{\paperwidth}{210mm}
+\setlength{\paperheight}{297mm}
+\special{papersize=210mm,297mm} % dvips/older engines
+\ifx\pdfpagewidth\undefined\else
+  \pdfpagewidth=\paperwidth
+  \pdfpageheight=\paperheight
+\fi
+
+\usepackage[titletoc]{appendix}
+\usepackage{graphicx}
+
+% ---- Additional packages needed for the dissertation content ----
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage[authoryear,round]{natbib}
+\providecommand{\newblock}{\hskip .11em plus .33em minus .07em}
+\usepackage{hyperref}
+\usepackage[capitalise]{cleveref}
+
+\bibliographystyle{plainnat} % author-year style, matches \citep/\citet/\citeauthor below
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    citecolor=green!50!black,
+    urlcolor=blue!50!black,
+    breaklinks=true,
+    pdftitle={Adaptive Geodesic Conformal Prediction for Uncertainty-Quantified Spherical Harmonic Reconstruction of Climate Fields},
+    pdfauthor={Sze Ying Choong}
+}
+\urlstyle{same} % render URLs in the body text font instead of monospace
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\dgeo}{d_{\mathrm{geo}}}
+% ---- End additions ----
+
+% Patch: avoid a trailing comma on the title page when \prevdegrees{} is empty
+% Patch: add \studentid and \supervisor fields (not provided by the base class)
+\makeatletter
+\def\studentid#1{\gdef\@studentid{#1}}
+\def\supervisor#1{\gdef\@supervisor{#1}}
+\def\@studentid{}
+\def\@supervisor{}
+\def\maketitle{
+{\ssp
+\begin{alwayssingle}
+    \let\footnotesize\small
+    \let\footnoterule\relax
+    \thispagestyle{empty}
+    \setcounter{page}{1}
+    \null\vfil
+    \vskip 40pt
+  \begin{center}
+    \includegraphics[width=0.55\textwidth]{images/nottingham-logo}
+    \vskip 2.5em
+    {\huge {\@title} \par}
+    \vskip 3em
+    {\Large
+     \lineskip .75em
+     by {\@author}\ifx\@prevdegrees\@empty\else, {\@prevdegrees}\fi \par}
+    \ifx\@studentid\@empty\else
+      \vskip .5em
+      {\large Student ID: {\@studentid} \par}
+    \fi
+    \vskip 3em
+           {\Large
+             Submitted to {\@university} \par\smallskip {\@date} \par\smallskip
+             in partial fulfilment of the conditions for the
+             award of the degree of \par\smallskip{\@degree} \par
+             \vfill}
+    \ifx\@supervisor\@empty\else
+      {\large Supervised by {\@supervisor} \par}
+      \vskip 1.5em
+    \fi
+            {\normalsize I declare that this dissertation is all my own work,
+             except as indicated in the text
+           }
+  \end{center}
+  \vfil\null
+\end{alwayssingle}
+\setcounter{footnote}{0}
+}}
+
+% Patch: the class's \abstract macro opens with \null\vfil, which pushes the
+% "Abstract" heading down using stretchable glue that consumes the whole page,
+% leaving no room for the actual abstract text (it was overflowing onto the
+% next page). Remove that leading \vfil so the heading sits at the top and
+% the text flows immediately below it, matching how \acknowledgements behaves.
+\def\abstract{
+ \def\ps@BCplain{\let\@mkboth\@gobbletwo
+      \def\@oddhead{}\def\@oddfoot{\rm\hfil\thepage
+      \hfil}\def\@evenhead{}\let\@evenfoot\@oddfoot}
+\begin{alwayssingle}
+\thispagestyle{BCplain}
+\begin{center}
+{\large \bfseries \abstractname}
+\end{center}}
+\def\endabstract{\par\vfil\null\end{alwayssingle}}
+\makeatother
+
+\renewcommand{\appendixtocname}{List of appendices}
+
+\title{Adaptive Geodesic Conformal Prediction for Uncertainty-Quantified Spherical Harmonic Reconstruction of Climate Fields}
+\author{Sze Ying Choong}
+\prevdegrees{} % no prior degree listed
+\university{The University of Nottingham}
+\degree{Master in Data Science}
+\date{10 September 2026}
+\studentid{20798235}
+\supervisor{Dr.\ Luis Espath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{frontmatter}
+\maketitle
+\tableofcontents
+
+\begin{abstract}
+\input{chapters/abstract_body}
+\end{abstract}
+
+\begin{acknowledgements}
+\input{chapters/acknowledgements_body}
+\end{acknowledgements}
+
+\listoffigures
+\listoftables
+
+\end{frontmatter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{chapters/introduction}
+\input{chapters/background}
+\input{chapters/data}
+\input{chapters/methodology}
+\input{chapters/results}
+\input{chapters/discussion}
+\input{chapters/conclusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliography{references} % references.bib
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{appendices}
+\input{chapters/appendix_body}
+\end{appendices}
+
+\end{document}
