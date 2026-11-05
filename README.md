@@ -26,6 +26,10 @@ The dissertation presentation (10 to 12 minutes) is included in this repository:
 
 Structure: slides 1 to 16 are the main talk (background and methodology, contribution, results, takeaways). Slides 17 to 20 are backup slides for questions (hyperparameter selection, pipeline overview, discussion, limitations).
 
+## Dissertation
+
+The full dissertation, "Adaptive Geodesic Conformal Prediction for Uncertainty-Quantified Spherical Harmonic Reconstruction of Climate Fields" (65 pages), is in [`docs/dissertation/thesis.pdf`](docs/dissertation/thesis.pdf). The LaTeX source and figures are in the same folder.
+
 ## Prior Work
 
 The spherical harmonic scalar-field reconstruction builds on the work of **Will Thomas (2025)**. The reconstruction framework and results from this work provide the starting point for the uncertainty quantification developed in this repository.
@@ -67,7 +71,8 @@ This repository extends the scalar-field reconstruction with an adaptive geodesi
 │   └── storage.py                    # saving and loading models, output folders
 └── docs/
     ├── Full_Presentation_FINAL_2.pptx
-    └── Full_Presentation_FINAL_2.pdf
+    ├── Full_Presentation_FINAL_2.pdf
+    └── dissertation/                 # full dissertation: thesis.pdf, LaTeX source and figures
 ```
 
 The code was reorganised from a single long script into modules so that each step can be read on its own. The function bodies, comments and printed messages are unchanged.
