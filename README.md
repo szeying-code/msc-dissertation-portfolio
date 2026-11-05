@@ -1,4 +1,4 @@
-# Scalar Field Reconstruction Code
+# Scalar Field Reconstruction Code + Adaptive Geodesic Conformal Uncertainty Quantification
 
 This repository contains the final code used for the dissertation experiments on spherical harmonic scalar-field reconstruction and adaptive geodesic conformal uncertainty quantification.
 
